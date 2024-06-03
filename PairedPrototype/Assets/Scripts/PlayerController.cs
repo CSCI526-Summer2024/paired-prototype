@@ -15,9 +15,9 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (Vector3.Distance(transform.position, movePoint.position) <= 0.01f)
+        if (Vector3.Distance(transform.position, movePoint.position) <= 0.001f)
         {
             
             if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f)
@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
             {
                 movePoint.position += new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f);
             }
+
+            //movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0f);
         }
 
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
