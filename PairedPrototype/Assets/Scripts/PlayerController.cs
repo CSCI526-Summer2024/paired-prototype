@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Tilemaps;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -8,6 +9,8 @@ public class PlayerController : MonoBehaviour
     public Transform movePoint;
 
     public LayerMask whatStopsMovement;
+    public Tilemap walkableTiles;
+    Color newColor = new Color(1f, 1f, 1f, 0.3f);
 
     // Start is called before the first frame update
     void Start()
@@ -41,7 +44,16 @@ public class PlayerController : MonoBehaviour
             //movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0f);
         }
 
+
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
+
+        Vector3Int cellPos = walkableTiles.WorldToCell(transform.position);
+        //Debug.Log(cellPos);
+
+        walkableTiles.SetTileFlags(cellPos, TileFlags.None);
+        walkableTiles.SetColor(cellPos, newColor);
+        //Debug.Log(walkableTiles.GetTile(cellPos));
+
 
     }
 }
